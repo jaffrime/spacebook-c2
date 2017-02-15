@@ -3,9 +3,15 @@ var idCounter = 0;
 
 var addPosts = function() {
   $('.posts').empty();
+  // good code...
+  // for (i=0; i<posts.length; i++){
+  //   $('.posts').append("<p class='post' data-id=" + posts[i].id + "><a href='#' class='remove'>remove</a> " + posts[i].text + "</p>");
+  // }
+
   for (i=0; i<posts.length; i++){
-    $('.posts').append("<p class='post' data-id=" + posts[i].id + "><a href='#' class='remove'>remove</a> " + posts[i].text + "</p>");
+    $('.posts').append("<p class='post' data-id=" + posts[i].id + "><a href='#' class='remove'>remove</a> " + posts[i].text + " <a href='#' class='comment'>comment</a></p>");
   }
+
 };
 
 var newPost = function(text) {
@@ -44,4 +50,23 @@ $('.posts').on('click', '.remove', function(){
       posts.splice(i,1);
     }
   }
+});
+
+$('.posts').on('click', '.comment', function(){
+  $(this).closest('p').append("<p><input id='commentName' placeholder='username' /><input id='commentText' placeholder='your comment' /><button type='button' id='commentButton'>Post</button></p>");
+});
+
+$('.posts').on('click', '#commentButton', function(){
+  //alert($(this).closest('p').find('#commentName').val());
+  var workingP = $(this).closest('p');
+  console.log(workingP);
+  var userComment = workingP.find('#commentName').val() + ": " + workingP.find('#commentText').val();
+  console.log(userComment);
+  workingP.empty();
+  workingP.append(userComment);
+
+  // var userComment = $(this).closest('p').find('#commentName').val() + ": " + $(this).closest('p').find('#commentText').val();
+  // console.log(userComment);
+  // $(this).closest('p').empty();
+  // $(this).closest('p').append(userComment);
 });
